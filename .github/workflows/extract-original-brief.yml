@@ -30,6 +30,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: clinicsay-enunciado-extracted
-          path: enunciado-extracted.txt
+          path: |
+            enunciado-extracted.txt
+            enunciado.pdf
           if-no-files-found: error
           retention-days: 1
