@@ -1,0 +1,55 @@
+name: ClinicSay Laravel CI
+on:
+  push:
+    branches: [main]
+    paths: ['backends/laravel/**']
+  workflow_dispatch:
+jobs:
+  laravel:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: clinicsay_test
+          POSTGRES_USER: clinicsay
+          POSTGRES_PASSWORD: clinicsay
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U clinicsay -d clinicsay_test"
+          --health-interval 5s --health-timeout 3s --health-retries 15
+    defaults:
+      run:
+        working-directory: backends/laravel
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_pgsql
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist
+      - run: cp .env.example .env && php artisan key:generate
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: clinicsay_test
+          DB_USERNAME: clinicsay
+          DB_PASSWORD: clinicsay
+      - run: php artisan innodite:doctor
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: clinicsay_test
+          DB_USERNAME: clinicsay
+          DB_PASSWORD: clinicsay
+      - run: php artisan migrate --force
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: clinicsay_test
+          DB_USERNAME: clinicsay
+          DB_PASSWORD: clinicsay
+      - run: vendor/bin/phpunit
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: clinicsay_test
+          DB_USERNAME: clinicsay
+          DB_PASSWORD: clinicsay
