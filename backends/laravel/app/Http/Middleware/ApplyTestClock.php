@@ -1,0 +1,3 @@
+<?php
+namespace App\\Http\\Middleware;use Closure;use Illuminate\\Http\\Request;use Illuminate\\Support\\Facades\\DB;use Illuminate\\Support\\Carbon;
+class ApplyTestClock{public function handle(Request $r,Closure $next){if(env('CLOCK_MODE')==='test'){try{$v=DB::table('service_clock')->where('id',1)->value('now');Carbon::setTestNow($v?Carbon::parse($v):null);}catch(\\Throwable){Carbon::setTestNow(null);}}else Carbon::setTestNow(null);return $next($r);}}
