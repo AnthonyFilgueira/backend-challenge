@@ -1,0 +1,3 @@
+<?php
+use Illuminate\\Database\\Migrations\\Migration;use Illuminate\\Database\\Schema\\Blueprint;use Illuminate\\Support\\Facades\\Schema;
+return new class extends Migration{public function up():void{Schema::create('inbound_messages',function(Blueprint $t){$t->id();$t->string('message_id')->unique();$t->string('from_phone');$t->text('text');$t->timestampTz('received_at');$t->string('result')->nullable();});}public function down():void{Schema::dropIfExists('inbound_messages');}};

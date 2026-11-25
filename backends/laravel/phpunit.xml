@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true"><testsuites><testsuite name="ClinicSay"><directory>tests</directory></testsuite></testsuites><php><env name="APP_ENV" value="testing"/><env name="DB_CONNECTION" value="pgsql"/><env name="CLOCK_MODE" value="test"/></php></phpunit>
