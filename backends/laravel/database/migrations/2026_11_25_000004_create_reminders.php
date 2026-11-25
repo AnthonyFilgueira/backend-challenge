@@ -1,3 +1,3 @@
 <?php
-use Illuminate\\Database\\Migrations\\Migration;use Illuminate\\Database\\Schema\\Blueprint;use Illuminate\\Support\\Facades\\Schema;
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
 return new class extends Migration{public function up():void{Schema::create('reminders',function(Blueprint $t){$t->uuid('id')->primary();$t->foreignUuid('appointment_id')->constrained()->cascadeOnDelete();$t->timestampTz('scheduled_for');$t->string('status')->default('pending');$t->unsignedInteger('attempts')->default(0);$t->timestampTz('sent_at')->nullable();$t->string('skip_reason')->nullable();$t->string('idempotency_key')->unique();$t->timestampTz('next_attempt_at')->nullable();$t->string('delivered_to')->nullable();$t->timestamps();$t->index(['status','scheduled_for','next_attempt_at']);});}public function down():void{Schema::dropIfExists('reminders');}};
