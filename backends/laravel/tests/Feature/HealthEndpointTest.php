@@ -1,3 +1,3 @@
 <?php
-namespace Tests\\Feature;use Tests\\TestCase;use Illuminate\\Foundation\\Testing\\RefreshDatabase;
+namespace Tests\Feature;use Tests\TestCase;use Illuminate\Foundation\Testing\RefreshDatabase;
 class HealthEndpointTest extends TestCase{use RefreshDatabase;public function test_health_reports_database_ready():void{$this->getJson('/api/health')->assertOk()->assertJson(['ok'=>true]);}public function test_clinic_creation_validates_iana_timezone():void{$this->postJson('/api/clinics',['name'=>'Demo','timezone'=>'Europe/Madrid'])->assertCreated()->assertJsonStructure(['id','name','timezone']);$this->postJson('/api/clinics',['name'=>'Bad','timezone'=>'not-a-timezone'])->assertStatus(422);}public function test_clock_endpoint_is_hidden_when_not_test_mode():void{putenv('CLOCK_MODE=production');$this->putJson('/api/test/clock',['now'=>'2026-11-25T08:00:00Z'])->assertNotFound();putenv('CLOCK_MODE=test');}}
