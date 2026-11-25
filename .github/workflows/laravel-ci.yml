@@ -41,7 +41,7 @@ jobs:
           DB_DATABASE: clinicsay_test
           DB_USERNAME: clinicsay
           DB_PASSWORD: clinicsay
-      - run: php artisan migrate --force
+      - run: php artisan vendor:publish --provider=Spatie\\Permission\\PermissionServiceProvider --force\n      - run: php artisan migrate --seed --force
         env:
           DB_HOST: 127.0.0.1
           DB_DATABASE: clinicsay_test
