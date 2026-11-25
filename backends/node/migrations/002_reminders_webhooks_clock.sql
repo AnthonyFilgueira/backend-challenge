@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS reminders(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),appointment_id uuid NOT NULL REFERENCES appointments(id) ON DELETE CASCADE,scheduled_for timestamptz NOT NULL,status varchar(16) NOT NULL CHECK(status IN('pending','sent','failed','skipped','cancelled')),attempts integer NOT NULL DEFAULT 0,sent_at timestamptz,skip_reason varchar(16) CHECK(skip_reason IS NULL OR skip_reason IN('too_late','no_phone','opted_out')),provider_message_id text,last_error text,created_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS idx_reminders_pending_due ON reminders(status,scheduled_for);
+CREATE TABLE IF NOT EXISTS inbound_messages(provider_message_id text PRIMARY KEY,from_phone text NOT NULL,text text NOT NULL,received_at timestamptz NOT NULL,processed_at timestamptz);
+CREATE TABLE IF NOT EXISTS test_clock(singleton boolean PRIMARY KEY DEFAULT true CHECK(singleton),now_at timestamptz NOT NULL);
