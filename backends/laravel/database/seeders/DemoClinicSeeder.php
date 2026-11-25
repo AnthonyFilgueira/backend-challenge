@@ -1,0 +1,3 @@
+<?php
+namespace Database\\Seeders;use Illuminate\\Database\\Seeder;use App\\Models\\Clinic;use App\\Models\\Patient;use Illuminate\\Support\\Str;
+class DemoClinicSeeder extends Seeder{public function run():void{$d=[['ClinicSay Demo Madrid','Europe/Madrid','+34600000001'],['ClinicSay Demo Tenerife','Atlantic/Canary','+34600000002'],['ClinicSay Demo Barcelona','Europe/Madrid','+34600000003']];foreach($d as [$name,$tz,$phone]){$c=Clinic::firstOrCreate(['name'=>$name],['id'=>(string)Str::uuid(),'timezone'=>$tz]);Patient::firstOrCreate(['clinic_id'=>$c->id,'name'=>'Paciente Sintético'],['id'=>(string)Str::uuid(),'phone'=>$phone,'accepts_reminders'=>true]);}}}
