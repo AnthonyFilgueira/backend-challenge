@@ -2,7 +2,6 @@ FROM php:8.3-cli
 RUN apt-get update && apt-get install -y git unzip libpq-dev && docker-php-ext-install pdo_pgsql && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
-COPY composer.json ./
-RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
 COPY . .
-CMD ["php","artisan","serve","--host=0.0.0.0","--port=3000"]
+RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
+CMD ["sh","-c","php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=3000"]
