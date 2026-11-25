@@ -1,0 +1,1 @@
+import type {FastifyInstance} from 'fastify';import {randomUUID} from 'node:crypto';export function registerRequestId(app:FastifyInstance){app.addHook('onRequest',async(req,reply)=>{const id=typeof req.headers['x-request-id']==='string'?req.headers['x-request-id']:randomUUID();req.id=id;reply.header('x-request-id',id);});}
