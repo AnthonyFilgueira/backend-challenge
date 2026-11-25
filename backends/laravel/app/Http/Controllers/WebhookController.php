@@ -1,3 +1,3 @@
 <?php
-namespace App\\Http\\Controllers;use App\\Http\\Requests\\InboundWebhookRequest;use App\\Services\\InboundWebhookService;use Illuminate\\Http\\JsonResponse;
+namespace App\Http\Controllers;use App\Http\Requests\InboundWebhookRequest;use App\Services\InboundWebhookService;use Illuminate\Http\JsonResponse;
 class WebhookController{public function __construct(private InboundWebhookService $service){}public function inbound(InboundWebhookRequest $r):JsonResponse{$this->service->handle($r->validated());return response()->json(['received'=>true]);}}
