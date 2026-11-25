@@ -1,3 +1,3 @@
 <?php
-namespace App\\Services;use App\\Repositories\\PatientRepository;use App\\Repositories\\ClinicRepository;use Illuminate\\Support\\Str;use Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException;
+namespace App\Services;use App\Repositories\PatientRepository;use App\Repositories\ClinicRepository;use Illuminate\Support\Str;use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PatientService{public function __construct(private PatientRepository $patients,private ClinicRepository $clinics){}public function create(array $d):array{if(!$this->clinics->find($d['clinicId']))throw new NotFoundHttpException('La clínica no existe');$p=$this->patients->create(['id'=>(string)Str::uuid(),'clinic_id'=>$d['clinicId'],'name'=>$d['name'],'phone'=>$d['phone']??null,'accepts_reminders'=>$d['acceptsReminders']]);return ['id'=>$p->id,'clinicId'=>$p->clinic_id,'name'=>$p->name,'phone'=>$p->phone,'acceptsReminders'=>$p->accepts_reminders];}}
