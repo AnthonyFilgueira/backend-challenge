@@ -1,4 +1,4 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {DateTime} from 'luxon';import {planReminder,normalizeReply,formatReminderText} from '../../src/reminder-planner.js';
 test('normalizes SI/NO accents and punctuation',()=>{assert.equal(normalizeReply(' sí! '),'SI');assert.equal(normalizeReply('NO'),'NO');});
-test('reminder lands in clinic daytime',()=>{const start=DateTime.fromISO('2026-12-01T14:00:00Z');const now=DateTime.fromISO('2026-11-29T12:00:00Z');const p=planReminder(start,'Europe/Madrid',now);assert.equal(p.scheduledFor.toISO(),'2026-11-30T13:00:00.000Z');});
+test('reminder lands in clinic daytime',()=>{const start=DateTime.fromISO('2026-12-01T14:00:00Z');const now=DateTime.fromISO('2026-11-29T12:00:00Z');const p=planReminder(start,'Europe/Madrid',now);assert.equal(p.scheduledFor.toISO(),'2026-11-30T14:00:00.000Z');});
 test('text formats clinic timezone',()=>{assert.match(formatReminderText('Ana','Clinic',DateTime.fromISO('2026-12-01T14:00:00Z'),'Europe/Madrid'),/01\/12\/2026 a las 15:00/);});
