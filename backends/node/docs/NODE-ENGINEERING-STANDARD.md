@@ -1,0 +1,16 @@
+# Node Backend Engineering Standard
+- Runtime: Node 22+, TypeScript strict, Fastify, PostgreSQL.
+- Routing: /api/v1, REST plural resources; command endpoints for business actions. Each route declares permission.
+- Layering: Route → middleware → schema → Controller → Service/Use Case → Domain → Repository → DB. Controllers thin; repositories only persistence.
+- Middleware: request ID, authentication, tenant context, permission checks, rate limits as needed.
+- RBAC: central SaaS vs tenant scopes, granular permissions; verify membership, tenant, ownership and permission server-side.
+- Validation: schema structure; services business rules; DB integrity constraints.
+- Errors: {error:{code,message,requestId}}, centralized, no stack leakage.
+- DB: migrations, FK, indexes, transactions; tenant filter every query.
+- Integrations: interfaces/adapters, timeouts, idempotency; ambiguous provider result must not be blindly retried.
+- Jobs: safe concurrent claim, bounded retries, idempotent state transitions.
+- Tests: unit, integration, acceptance/contract, security; CI typecheck, test, build.
+- Configuration: env validated once, never scattered process.env.
+- Observability: structured logs/correlation, sensitive data redaction, audit.
+- Deploy: CI gate, immutable artifact, environments, migrations, readiness and rollback. Production requires authorization.
+- Docs: OpenAPI contract, ADR, runbook updated with verified evidence.
