@@ -1,0 +1,6 @@
+{
+"_readme":"ClinicSay: SaaS multitenant. Central administration and clinic tenants. No single-app mode.",
+"contexts":{
+"central":{"id":"central","tenancy_strategy":"manual","connection_key":"central","class_prefix":"Central","folder":"Central","namespace_path":"Central","route_file":"central.php","route_prefix":"central","route_name":"central.","permission_prefix":"central_","permission_middleware":"central-permission","route_middleware":["web","auth"]},
+"tenant":{"id":"tenant","tenancy_strategy":"stancl","connection_key":"tenant","class_prefix":"Tenant","folder":"Tenant","namespace_path":"Tenant","route_file":"tenant.php","route_prefix":"tenant","route_name":"tenant.","permission_prefix":"tenant_","permission_middleware":"tenant-permission","route_middleware":["web","auth","tenant","prevent.access.from.central.domains"]}
+}}
