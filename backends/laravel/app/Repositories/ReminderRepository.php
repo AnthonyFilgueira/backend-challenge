@@ -1,3 +1,3 @@
 <?php
-namespace App\\Repositories;use App\\Models\\Reminder;
+namespace App\Repositories;use App\Models\Reminder;
 class ReminderRepository{public function create(array $d):Reminder{return Reminder::create($d);}public function cancelPending(string $id):int{return Reminder::where('appointment_id',$id)->where('status','pending')->update(['status'=>'cancelled']);}public function cancelPriorForReschedule(string $id):int{return Reminder::where('appointment_id',$id)->whereIn('status',['pending','sent'])->update(['status'=>'cancelled']);}public function dueIds():array{return Reminder::where('status','pending')->where(function($q){$q->whereNull('next_attempt_at')->orWhere('next_attempt_at','<=',now());})->where('scheduled_for','<=',now())->orderBy('scheduled_for')->limit(100)->pluck('id')->all();}public function locked(string $id):?Reminder{return Reminder::with('appointment.patient','appointment.clinic')->whereKey($id)->lockForUpdate()->first();}}
