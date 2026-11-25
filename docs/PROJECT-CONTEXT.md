@@ -82,3 +82,7 @@ Internamente, los recordatorios/jobs pueden tener estados operativos más ricos:
 - Horarios calculados con zona horaria y DST.
 - Auditoría útil, sin exponer secretos ni datos sensibles innecesarios.
 - CI reproducible, despliegue controlado y evidencia de aceptación.
+
+
+## Decisión vigente de implementación (25/11/2026)
+Anthony confirma Laravel-first. La implementación principal se construye en `backends/laravel/` en `main`, patrón FormRequest → Controller → Service → Repository → Model, PostgreSQL, Central/Tenant multitenant y RBAC. Node evaluable queda como Fase 2, tras GO de Laravel. La maqueta no cuenta como backend funcional.

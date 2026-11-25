@@ -95,3 +95,28 @@
 
 ## Estado
 La fase activa es **Fase 1: documentación, flujos, arquitectura conceptual y maqueta UX**. La maqueta contiene datos ficticios y navegación de presentación; no conecta con API ni base de datos.
+
+
+## Ejecución Laravel-first (decisión vigente 25/11/2026)
+
+La prioridad explícita del proyecto se actualizó: **Fase 1 Laravel** como backend de referencia completo, luego QA GO, y Node/TypeScript como Fase 2. Laravel debe cumplir patrón FormRequest → Controller → Service → Repository → Model, PostgreSQL, multitenancy Central/Tenant, RBAC y aislamiento. No usar single-app. La implementación evaluable Node del challenge sigue siendo un requisito posterior, no queda sustituida.
+
+### Registro atómico — 25/11/2026 (America/Lima)
+| Tarea | Inicio | Fin | Estado | Evidencia |
+|---|---|---|---|---|
+| T1 Revisar fuentes y baseline remoto | 05:51 | 05:53 | Cerrada | Revisado enunciado/OpenAPI/provider/contexto; main inicial sin backends/laravel |
+| T2 Scaffold Laravel 13, configuración base, rutas y DB | 05:53 | — | En curso | commits main abac616, d1044f2 |
+| T3 Models/Repositories y validación HTTP | 05:55 | — | En curso | commits 31c7fab, 5e899f5, 6901e99 |
+| T4 Casos de uso Clinics/Patients/Appointments | 05:57 | — | En curso, parcial | commit f40de28; crear, obtener, reprogramar y cancelar |
+| T5 Reminder scheduler/dispatch y provider adapter | 06:00 | — | Parcial | commit 2ddccb2; faltan pruebas y revisión |
+| T6 Webhook inbound SI/NO dedupe | 06:01 | — | Parcial | commit 8d4abc4 |
+| T7 Clock test persistente y middleware | 06:02 | — | Parcial | commits a0c5adf, c49d15a |
+| T8 Compose aislado, Module Maker multitenant y CI | 06:00 | — | Parcial | commits 4561139, d957848; CI run 45600646927 iniciado |
+
+### Pendiente crítica
+- Suite Innodite es privada. La integración GitHub permite inspeccionar su código, pero un Composer runner no tiene garantizado acceso/credenciales; no se incorporó como dependencia aún. Se inspeccionó el composer de Suite y sus scaffolds multitenant. Module Maker v5.2 sí es público y se añadió como Composer dependency VCS.
+- Tenancy real y separación Central/Tenant aún no implementadas ni verificadas; contexts.json configura ambos contextos, pero no equivale a aislamiento runtime.
+- RBAC granular no implementado todavía.
+- Scheduler/claim concurrency, reintentos, DST, respuesta webhook correlación y contrato API no QA.
+- No se ejecutó Composer local/remoto manualmente; el workflow CI está en curso.
+- CI/tests actuales no son evidencia de QA aprobada hasta concluir y revisar resultados.
