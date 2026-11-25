@@ -1,0 +1,3 @@
+<?php
+namespace App\\Models;use Illuminate\\Database\\Eloquent\\Model;
+class Reminder extends Model{protected $fillable=['appointment_id','scheduled_for','status','attempts','sent_at','skip_reason','idempotency_key','next_attempt_at','delivered_to'];protected $casts=['scheduled_for'=>'immutable_datetime','sent_at'=>'immutable_datetime','next_attempt_at'=>'immutable_datetime'];public function appointment(){return $this->belongsTo(Appointment::class);}}

@@ -1,0 +1,3 @@
+<?php
+namespace App\\Models;use Illuminate\\Database\\Eloquent\\Model;
+class Appointment extends Model{protected $fillable=['clinic_id','patient_id','starts_at','status'];protected $casts=['starts_at'=>'immutable_datetime'];public function clinic(){return $this->belongsTo(Clinic::class);}public function patient(){return $this->belongsTo(Patient::class);}public function reminders(){return $this->hasMany(Reminder::class)->orderBy('scheduled_for');}}
